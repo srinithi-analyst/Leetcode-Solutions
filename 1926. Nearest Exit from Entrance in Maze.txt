@@ -1,0 +1,22 @@
+class Solution:
+    def nearestExit(self, maze: List[List[str]], entrance: List[int]) -> int:
+        row=len(maze)
+        col=len(maze[0])
+        queue=deque()
+        queue.append((entrance[0],entrance[1],0))
+        maze[entrance[0]][entrance[1]]="+"
+
+        direction=[(0,1),(0,-1),(1,0),(-1,0)]
+        while queue:
+            r,c,steps=queue.popleft()
+            for dr,dc in direction:
+                nr=r+dr
+                nc=c+dc
+                if 0 <= nr < row and 0<=nc<col and maze[nr][nc]==".":
+                    if nr==0 or nr==row-1 or nc==0 or nc==col-1:
+                        return steps + 1
+                    maze[nr][nc]="+"
+                    queue.append((nr,nc,steps+1))
+        return -1            
+
+
